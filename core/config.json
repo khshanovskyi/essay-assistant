@@ -1,0 +1,39 @@
+{
+  "routes": {},
+  "applications": {
+    "essay-assistant": {
+      "displayName": "Essay assistant",
+      "description": "",
+      "endpoint": "http://host.docker.internal:5035/openai/deployments/essay-assistant/chat/completions",
+      "inputAttachmentTypes": [
+        "image/png",
+        "image/jpeg"
+      ]
+    }
+  },
+  "models": {
+    "gpt-4o": {
+      "displayName": "GPT 4o",
+      "endpoint": "http://adapter-dial:5000/openai/deployments/gpt-4o/chat/completions",
+      "iconUrl": "http://localhost:3001/gpt4.svg",
+      "type": "chat",
+      "upstreams": [
+        {
+          "endpoint": "https://ai-proxy.lab.epam.com/openai/deployments/gpt-4o/chat/completions",
+          "key": ""
+        }
+      ]
+    }
+  },
+  "keys": {
+    "dial_api_key": {
+      "project": "TEST-PROJECT",
+      "role": "default"
+    }
+  },
+  "roles": {
+    "default": {
+      "limits": {}
+    }
+  }
+}
