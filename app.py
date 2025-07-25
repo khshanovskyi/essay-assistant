@@ -60,4 +60,4 @@ app: DIALApp = DIALApp()
 app.add_chat_completion(deployment_name="essay-assistant", impl=EssayAssistantApplication())
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=int(os.environ.get('PORT', '5035')))
+    uvicorn.run(app, port=int(os.environ.get('PORT', '5000')))
