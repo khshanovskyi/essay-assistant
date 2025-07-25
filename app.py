@@ -1,12 +1,10 @@
 import os
-from random import choice
 
 import uvicorn
-from aidial_client import AsyncDial, Dial
+from aidial_client import AsyncDial
 
 from aidial_sdk import DIALApp
 from aidial_sdk.chat_completion import ChatCompletion, Request, Response, Message, Role
-from pydantic import StrictStr
 
 SYSTEM_PROMPT = """You are an essay-focused assistant. Respond to every request by writing a **short essay** of up to 300 tokens.
 
@@ -21,6 +19,7 @@ SYSTEM_PROMPT = """You are an essay-focused assistant. Respond to every request 
 - Use formal, academic tone
 - Include specific examples when relevant
 - Maintain logical flow between paragraphs
+- If user included pictures in request, use them as part of context to generate answers
 """
 
 DIAL_URL = os.environ.get('DIAL_URL', 'http://localhost:8080')
@@ -44,9 +43,9 @@ class EssayAssistantApplication(ChatCompletion):
                 messages=[
                     Message(
                         role=Role.SYSTEM,
-                        content=StrictStr(SYSTEM_PROMPT),
-                    ).dict(),
-                    request.messages[-1].dict()
+                        content=SYSTEM_PROMPT,
+                    ).dict(exclude_none=True),
+                    request.messages[-1].dict(exclude_none=True)
                 ],
             )
 
