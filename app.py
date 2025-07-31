@@ -23,8 +23,6 @@ SYSTEM_PROMPT = """You are an essay-focused assistant. Respond to every request 
 """
 
 DIAL_URL = os.environ.get('DIAL_URL', 'http://localhost:8080')
-MODEL_NAME = os.environ.get('MODEL_NAME', 'gpt-4o')
-API_VERSION = os.environ.get('API_VERSION', '2025-01-01-preview')
 
 class EssayAssistantApplication(ChatCompletion):
 
@@ -34,7 +32,7 @@ class EssayAssistantApplication(ChatCompletion):
         client: AsyncDial = AsyncDial(
             base_url=DIAL_URL,
             api_key=request.api_key,
-            api_version=API_VERSION
+            api_version='2025-01-01-preview'
         )
 
         with response.create_single_choice() as choice:
@@ -42,7 +40,7 @@ class EssayAssistantApplication(ChatCompletion):
             print(f"User request: {usr_msg}")
 
             chunks = await client.chat.completions.create(
-                deployment_name=MODEL_NAME,
+                deployment_name='gpt-4o',
                 stream=True,
                 messages=[
                     Message(
